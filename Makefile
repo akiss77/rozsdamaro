@@ -62,6 +62,7 @@ internal-rust-checkout-branch-pre:
 	cd $(RUST_SRC_DIR) && git fetch $(RUST_FORK_REMOTE)
 	cd $(RUST_SRC_DIR) && git checkout $(BRANCH)
 	cd $(RUST_SRC_DIR) && git reset --hard $(RUST_FORK_REMOTE)/$(BRANCH)
+	cd $(RUST_SRC_DIR) && git submodule update
 	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
 	@echo "$(IDENT): Rust hash is `cat $(RUST_HASH_OUT)`"
@@ -186,6 +187,7 @@ rust-mirror-master:
 	cd $(RUST_SRC_DIR) && git fetch $(RUST_UPSTREAM_REMOTE)
 	cd $(RUST_SRC_DIR) && git checkout master
 	cd $(RUST_SRC_DIR) && git merge --ff-only $(RUST_UPSTREAM_REMOTE)/master
+	cd $(RUST_SRC_DIR) && git submodule update
 	cd $(RUST_SRC_DIR) && git push $(RUST_FORK_REMOTE) master
 
 .PHONY: rust-rebase-fork
@@ -214,3 +216,4 @@ rust-create-branch:
 	cd $(RUST_SRC_DIR) && git checkout $(RUST_FORK_MASTER)
 	cd $(RUST_SRC_DIR) && git checkout -b $(BRANCH)
 	cd $(RUST_SRC_DIR) && git rebase --onto $(HASH) master $(BRANCH)
+	cd $(RUST_SRC_DIR) && git submodule update
