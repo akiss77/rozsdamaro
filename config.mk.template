@@ -1,0 +1,68 @@
+# Rozsdamaro config file template
+#
+# Rename this file to config.mk and fill in the variables to suite your system.
+#
+# Copyright (C) 2014-2015, Akos Kiss <akiss@inf.u-szeged.hu>
+
+
+################################################################################
+# General configuration
+#
+# Variables in this section affect the whole system
+
+# Configuration for the x86_64 host
+#
+# Settings for the build PC
+
+# Root directory of the Rozsdamaro system on the PC
+RZSD_DIR_x86_64:=
+
+# Bin directory of an aarch64-targeted cross-gcc toolchain
+GCC_BIN_DIR_x86_64_X_aarch64:=
+
+# Directory prefix where built components shall be installed on the PC
+INST_DIR_x86_64:=
+
+# Configuration for the aarch64 host
+#
+# Settings for a native aarch64 machine
+
+# SSH-compatible login info to the aarch64 machine, i.e., user@hostname
+SLAVE_aarch64:=
+
+# Root directory of the Rozsdamaro system on the aarch64 machine
+# Note: For now at least, the aarch64 slave is expected to share the Rozsdamaro
+# directory with the PC, i.e., one should mount the other.
+RZSD_DIR_aarch64:=
+
+# Directory prefix where built components shall be installed on the aarch64 machine
+INST_DIR_aarch64:=
+
+
+################################################################################
+# Rust-specific configuration
+#
+# Variables in this section affect the Rust targets only
+
+# Configuration for git
+#
+# Note: It is important to name remotes the same on both machines (PC and aarch64)
+
+# Git remote name of upstream rust
+# Most probably should point at https://github.com/rust-lang/rust.git
+# This variable is not necessary for non-maintainers of the aarch64 fork
+RUST_UPSTREAM_REMOTE:=
+
+# Git remote name containing the aarch64 fork of rust
+# Most probably should point at https://github.com/akiss77/rust.git
+RUST_FORK_REMOTE:=
+
+# Name of the branch that keeps up with upstream/master and applies the necessary aarch64 patches on top
+# Most probably aarch64-native-cross
+RUST_FORK_MASTER:=
+
+# Directory where rust is checked out on the PC
+RUST_SRC_DIR_x86_64:=
+
+# Directory where rust is checked out on the aarch64 machine
+RUST_SRC_DIR_aarch64:=
