@@ -56,6 +56,7 @@ rust-checkout-fork:
 internal-rust-build-branch-pre: internal-rust-checkout-branch-pre
 	@echo "$(IDENT): Rust build started at `date -u +%Y%m%d-%H%M%S`"
 	@echo "$(IDENT): Rust build/target architecture is $(BUILD_ARCH)/$(TARGET_ARCH)"
+	@echo "$(IDENT): Rust build uses MAKEFLAGS=\"$(MAKEFLAGS)\""
 
 ifneq ($(BUILD_ARCH),$(TARGET_ARCH))
 
