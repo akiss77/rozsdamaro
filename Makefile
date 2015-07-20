@@ -17,6 +17,7 @@ include config.mk
 
 IDENT:=RZSD
 BUILD_ARCH:=$(shell uname -m)
+BUILD_TRIPLE:=$(BUILD_ARCH)-unknown-linux-gnu
 TARGET_ARCH:=aarch64
 TARGET_TRIPLE:=$(TARGET_ARCH)-unknown-linux-gnu
 
@@ -90,7 +91,7 @@ export PATH:=$(GCC_BIN_DIR_$(BUILD_ARCH)_X_$(TARGET_ARCH)):$(PATH)
 .PHONY: internal-rust-build-branch-main
 internal-rust-build-branch-main: internal-rust-build-branch-pre
 	-$(MAKE) -C $(RUST_SRC_DIR) clean
-	cd $(RUST_SRC_DIR) && ./configure --host=$(TARGET_TRIPLE) --target=$(TARGET_TRIPLE) --disable-valgrind --disable-docs --prefix=$(INST_DIR)/$(RUST_PKG_ID)
+	cd $(RUST_SRC_DIR) && ./configure --host=$(BUILD_TRIPLE),$(TARGET_TRIPLE) --target=$(TARGET_TRIPLE) --disable-valgrind --disable-docs --prefix=$(INST_DIR)/$(RUST_PKG_ID)
 	$(MAKE) -C $(RUST_SRC_DIR) VERBOSE=1
 	
 	$(MAKE) -C $(RUST_SRC_DIR) snap-stage3-H-$(TARGET_TRIPLE) VERBOSE=1 | tee $(RUST_SNAP_OUT)
