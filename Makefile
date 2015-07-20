@@ -3,6 +3,7 @@
 # Makefile system for maintaining and building components of the Rust world 
 # with a special focus on AArch64
 #
+# Copyright (C) 2014-2015, University of Szeged
 # Copyright (C) 2014-2015, Akos Kiss <akiss@inf.u-szeged.hu>
 
 
