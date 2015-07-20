@@ -63,7 +63,7 @@ ifneq ($(BUILD_ARCH),$(TARGET_ARCH))
 export PATH:=$(GCC_BIN_DIR_$(BUILD_ARCH)_X_$(TARGET_ARCH)):$(PATH)
 
 .PHONY: internal-rust-build-branch-main
-internal-rust-build-branch-main: internal-rust-build-branch-pre
+internal-rust-build-branch-main: internal-rust-build-branch-pre $(STORE_DIR)
 	-$(MAKE) -C $(RUST_SRC_DIR) clean
 	cd $(RUST_SRC_DIR) && ./configure --host=$(BUILD_TRIPLE),$(TARGET_TRIPLE) --target=$(TARGET_TRIPLE) --disable-valgrind --disable-docs --prefix=$(INST_DIR)/$(RUST_PKG_ID)
 	$(MAKE) -C $(RUST_SRC_DIR) VERBOSE=1
@@ -79,7 +79,7 @@ else
 RUST_SNAPSHOT_FILE=$(shell cd $(STORE_DIR) && ls -f $(RUST_PKG_ID)-$(TARGET_ARCH)-snap-x.tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap-x.tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap.tar.bz2 | head -1)
 
 .PHONY: internal-rust-build-branch-main
-internal-rust-build-branch-main: internal-rust-build-branch-pre
+internal-rust-build-branch-main: internal-rust-build-branch-pre $(STORE_DIR)
 	-$(MAKE) -C $(RUST_SRC_DIR) clean
 	cd $(RUST_SRC_DIR) && ./configure --disable-valgrind --prefix=$(INST_DIR)/$(RUST_PKG_ID)
 	$(MAKE) -C $(RUST_SRC_DIR) VERBOSE=1 HIDE_STAGE0=1 SNAPSHOT_FILE=$(STORE_DIR)/$(RUST_SNAPSHOT_FILE)
@@ -105,7 +105,7 @@ rust-build-branch: internal-rust-build-branch-main
 	rm -f $(RUST_TIME_OUT)
 
 .PHONY: rust-build-branch-log
-rust-build-branch-log:
+rust-build-branch-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(XBUILT).txt
 	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
@@ -128,7 +128,7 @@ rust-build-branch-slave: rust-build-branch
 	ssh $(SLAVE_$(TARGET_ARCH)) "make -j -C $(RZSD_DIR_$(TARGET_ARCH)) rust-build-branch BRANCH=$(BRANCH)"
 
 .PHONY: rust-build-branch-slave-log
-rust-build-branch-slave-log:
+rust-build-branch-slave-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch-slave 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-slave.txt
 	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
@@ -177,7 +177,7 @@ rust-all-fork:
 	$(MAKE) -C $(RZSD_DIR) rust-build-fork-slave
 
 .PHONY: rust-all-fork-log
-rust-all-fork-log:
+rust-all-fork-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-all-fork 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-all.txt
 	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)

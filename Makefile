@@ -39,10 +39,17 @@ INST_DIR:=$(INST_DIR_$(BUILD_ARCH))
 
 
 ################################################################################
+# General rules
+
 # Default rule to avoid any executions by mistake
 
 default:
 	@echo "$(IDENT): Error: Default make target unsupported. Please specify target explicitly." && false
+
+# Rule to ensure that store directoy exists
+
+$(STORE_DIR):
+	mkdir -p $(STORE_DIR)
 
 
 ################################################################################
