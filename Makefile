@@ -1,8 +1,11 @@
-# Rozsdamaro
-#
-# Makefile system for maintaining and building components of the Rust world
-# with a special focus on AArch64
-#
+## # Rozsdamaro
+##
+## Makefile system for maintaining and building components of the
+## [Rust world](http://www.rust-lang.org/) with a special focus on AArch64.
+##
+## See [LICENSE](LICENSE) for copyright and licensing.
+##
+
 # Copyright (C) 2014-2015, University of Szeged
 # Copyright (C) 2014-2015, Akos Kiss <akiss@inf.u-szeged.hu>
 
@@ -46,3 +49,4 @@ default:
 # Component-specific rules
 
 include mk/rust.mk
+include mk/readme.mk

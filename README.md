@@ -1,0 +1,32 @@
+# Rozsdamaro
+
+Makefile system for maintaining and building components of the
+[Rust world](http://www.rust-lang.org/) with a special focus on AArch64.
+
+See [LICENSE](LICENSE) for copyright and licensing.
+
+## Self-documentation rules
+
+* make doc
+
+## Rust build rules
+
+* make rust-checkout-branch BRANCH=nnn
+* make rust-checkout-fork
+* make rust-build-branch BRANCH=nnn
+* make rust-build-branch-log BRANCH=nnn
+* make rust-build-fork
+* make rust-build-fork-log
+* make rust-build-branch-slave BRANCH=nnn
+* make rust-build-branch-slave-log BRANCH=nnn
+* make rust-build-fork-slave
+* make rust-build-fork-slave-log
+
+## Rust fork maintenance rules
+
+* make rust-mirror-master
+* make rust-rebase-fork
+* make rust-all-fork
+* make rust-all-fork-log
+* make rust-create-branch HASH=xxx BRANCH=nnn
+

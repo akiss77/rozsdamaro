@@ -11,18 +11,19 @@ RUST_SRC_DIR:=$(RUST_SRC_DIR_$(BUILD_ARCH))
 
 
 ################################################################################
-# Rust build rules
-#
-# make rust-checkout-branch BRANCH=nnn
-# make rust-checkout-fork
-# make rust-build-branch BRANCH=nnn
-# make rust-build-branch-log BRANCH=nnn
-# make rust-build-fork
-# make rust-build-fork-log
-# make rust-build-branch-slave BRANCH=nnn
-# make rust-build-branch-slave-log BRANCH=nnn
-# make rust-build-fork-slave
-# make rust-build-fork-slave-log
+## ## Rust build rules
+##
+## * make rust-checkout-branch BRANCH=nnn
+## * make rust-checkout-fork
+## * make rust-build-branch BRANCH=nnn
+## * make rust-build-branch-log BRANCH=nnn
+## * make rust-build-fork
+## * make rust-build-fork-log
+## * make rust-build-branch-slave BRANCH=nnn
+## * make rust-build-branch-slave-log BRANCH=nnn
+## * make rust-build-fork-slave
+## * make rust-build-fork-slave-log
+##
 
 RUST_HASH_OUT:=$(shell mktemp --tmpdir --dry-run rzsd-rust-hash.XXXXXXXXXX)
 RUST_TIME_OUT:=$(shell mktemp --tmpdir --dry-run rzsd-rust-time.XXXXXXXXXX)
@@ -146,13 +147,14 @@ endif
 
 
 ################################################################################
-# Rust maintenance rules
-#
-# make rust-mirror-master
-# make rust-rebase-fork
-# make rust-all-fork
-# make rust-all-fork-log
-# make rust-create-branch HASH=xxx BRANCH=nnn
+## ## Rust fork maintenance rules
+##
+## * make rust-mirror-master
+## * make rust-rebase-fork
+## * make rust-all-fork
+## * make rust-all-fork-log
+## * make rust-create-branch HASH=xxx BRANCH=nnn
+##
 
 .PHONY: rust-mirror-master
 rust-mirror-master:
