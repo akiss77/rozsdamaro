@@ -22,6 +22,12 @@ BUILD_TRIPLE:=$(BUILD_ARCH)-unknown-linux-gnu
 TARGET_ARCH:=aarch64
 TARGET_TRIPLE:=$(TARGET_ARCH)-unknown-linux-gnu
 
+ifneq ($(BUILD_ARCH),$(TARGET_ARCH))
+XBUILT:=-x
+else
+XBUILT:=
+endif
+
 # Directory shorthands
 
 RZSD_DIR:=$(RZSD_DIR_$(BUILD_ARCH))
@@ -86,7 +92,6 @@ internal-rust-build-branch-pre: internal-rust-checkout-branch-pre
 	
 ifneq ($(BUILD_ARCH),$(TARGET_ARCH))
 
-RUST_XSUFF:=-x
 export PATH:=$(GCC_BIN_DIR_$(BUILD_ARCH)_X_$(TARGET_ARCH)):$(PATH)
 
 .PHONY: internal-rust-build-branch-main
@@ -97,13 +102,12 @@ internal-rust-build-branch-main: internal-rust-build-branch-pre
 	
 	$(MAKE) -C $(RUST_SRC_DIR) snap-stage3-H-$(TARGET_TRIPLE) VERBOSE=1 | tee $(RUST_SNAP_OUT)
 	grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT) && \
-	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2
+	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 	rm -f $(RUST_SNAP_OUT)
-	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2
+	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 
 else
 
-RUST_XSUFF:=
 RUST_SNAPSHOT_FILE=$(shell cd $(STORE_DIR) && ls -f $(RUST_PKG_ID)-$(TARGET_ARCH)-snap-x.tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap-x.tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap.tar.bz2 | head -1)
 
 .PHONY: internal-rust-build-branch-main
@@ -114,15 +118,15 @@ internal-rust-build-branch-main: internal-rust-build-branch-pre
 	
 	$(MAKE) -C $(RUST_SRC_DIR) snap-stage3 | tee $(RUST_SNAP_OUT)
 	grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT) && \
-	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2
+	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 	rm -f $(RUST_SNAP_OUT)
-	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(RUST_XSUFF).tar.bz2
+	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 	
 	$(MAKE) -C $(RUST_SRC_DIR) install
 	cd $(INST_DIR) && ln -sf $(RUST_PKG_ID) $(RUST_LATEST)
 	
-	cd $(INST_DIR) && tar cvfj $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(RUST_XSUFF).tar.bz2 $(RUST_PKG_ID)
-	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(RUST_XSUFF).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-inst$(RUST_XSUFF).tar.bz2
+	cd $(INST_DIR) && tar cvfj $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 $(RUST_PKG_ID)
+	cd $(STORE_DIR) && ln -sf $(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2
 
 endif
 
@@ -134,10 +138,10 @@ rust-build-branch: internal-rust-build-branch-main
 
 .PHONY: rust-build-branch-log
 rust-build-branch-log:
-	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(RUST_XSUFF).txt
+	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(XBUILT).txt
 	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
-	mv $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(RUST_XSUFF).txt $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-log$(RUST_XSUFF).txt
+	mv $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(XBUILT).txt $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-log$(XBUILT).txt
 	rm -f $(RUST_HASH_OUT)
 	rm -f $(RUST_TIME_OUT)
 
