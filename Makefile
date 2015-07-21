@@ -56,4 +56,5 @@ $(STORE_DIR):
 # Component-specific rules
 
 include mk/rust.mk
+include mk/cargo.mk
 include mk/readme.mk

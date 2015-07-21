@@ -67,3 +67,17 @@ RUST_SRC_DIR_x86_64:=
 
 # Directory where rust is checked out on the aarch64 machine
 RUST_SRC_DIR_aarch64:=
+
+
+################################################################################
+# Cargo-specific configuration
+
+# Git remote name of upstream cargo
+# Most probably should point at https://github.com/rust-lang/cargo.git
+CARGO_UPSTREAM_REMOTE:=
+
+# Directory where cargo is checked out on the PC
+CARGO_SRC_DIR_x86_64:=
+
+# Directory where cargo is checked out on the aarch64 machine
+CARGO_SRC_DIR_aarch64:=

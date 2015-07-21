@@ -5,6 +5,21 @@ Makefile system for maintaining and building components of the
 
 See [LICENSE](LICENSE) for copyright and licensing.
 
+## Cargo build rules
+
+* make cargo-build-hash HASH=hhh|nnn
+* make cargo-build-hash-log HASH=hhh|nnn
+* make cargo-build-master
+* make cargo-build-master-log
+
+## Cargo local copy maintenance rules
+
+* make cargo-pull-upstream
+
+## Cargo-related Rozsdamaro maintenance rules
+
+* make cargo-add-rust-hash VERSION=yyyy-mm-dd
+
 ## Self-documentation rules
 
 * make doc
