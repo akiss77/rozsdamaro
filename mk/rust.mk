@@ -38,7 +38,7 @@ internal-rust-checkout-branch-pre:
 	cd $(RUST_SRC_DIR) && git checkout $(BRANCH)
 	cd $(RUST_SRC_DIR) && git reset --hard $(RUST_FORK_REMOTE)/$(BRANCH)
 	cd $(RUST_SRC_DIR) && git submodule update
-	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
+	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) $(RUST_FORK_REMOTE)/master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
 	@echo "$(IDENT): Rust hash is `cat $(RUST_HASH_OUT)`"
 	@echo "$(IDENT): Rust commit date is `cat $(RUST_TIME_OUT)`"
@@ -107,7 +107,7 @@ rust-build-branch: internal-rust-build-branch-main
 .PHONY: rust-build-branch-log
 rust-build-branch-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(XBUILT).txt
-	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
+	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) $(RUST_FORK_REMOTE)/master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
 	mv $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log$(XBUILT).txt $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-log$(XBUILT).txt
 	rm -f $(RUST_HASH_OUT)
@@ -130,7 +130,7 @@ rust-build-branch-slave: rust-build-branch
 .PHONY: rust-build-branch-slave-log
 rust-build-branch-slave-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-build-branch-slave 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-slave.txt
-	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
+	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) $(RUST_FORK_REMOTE)/master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
 	mv $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-slave.txt $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-log-slave.txt
 	rm -f $(RUST_HASH_OUT)
@@ -179,7 +179,7 @@ rust-all-fork:
 .PHONY: rust-all-fork-log
 rust-all-fork-log: $(STORE_DIR)
 	( time $(MAKE) -C $(RZSD_DIR) rust-all-fork 2>&1 ) | tee $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-all.txt
-	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) master | cut -c 1-7 >$(RUST_HASH_OUT)
+	cd $(RUST_SRC_DIR) && git merge-base $(BRANCH) $(RUST_FORK_REMOTE)/master | cut -c 1-7 >$(RUST_HASH_OUT)
 	cd $(RUST_SRC_DIR) && date -u +%Y%m%d-%H%M%S -d "$$(git show `cat $(RUST_HASH_OUT)` --format=format:%cd --date=iso | head -1)" >$(RUST_TIME_OUT)
 	mv $(STORE_DIR)/$(RUST_LATEST)-$(TARGET_ARCH)-log-all.txt $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-log-all.txt
 	rm -f $(RUST_HASH_OUT)

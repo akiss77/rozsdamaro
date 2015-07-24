@@ -57,7 +57,7 @@ cargo-build-hash: $(STORE_DIR)
 
 .PHONY: cargo-build-master
 cargo-build-master:
-	$(MAKE) -C $(RZSD_DIR) cargo-build-hash HASH=HEAD
+	$(MAKE) -C $(RZSD_DIR) cargo-build-hash HASH=master
 
 .PHONY: cargo-build-hash-log
 cargo-build-hash-log: $(STORE_DIR)
@@ -70,7 +70,7 @@ cargo-build-hash-log: $(STORE_DIR)
 
 .PHONY: cargo-build-master-log
 cargo-build-master-log:
-	$(MAKE) -C $(RZSD_DIR) cargo-build-hash-log HASH=HEAD
+	$(MAKE) -C $(RZSD_DIR) cargo-build-hash-log HASH=master
 
 
 ################################################################################
