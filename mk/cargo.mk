@@ -45,10 +45,10 @@ cargo-build-hash: $(STORE_DIR)
 	$(MAKE) -C $(CARGO_SRC_DIR) VERBOSE=1
 	
 	$(MAKE) -C $(CARGO_SRC_DIR) install
-	cd $(INST_DIR) && ln -sf $(CARGO_PKG_ID) $(CARGO_LATEST)
+	cd $(INST_DIR) && ln -sfT $(CARGO_PKG_ID) $(CARGO_LATEST)
 	
 	cd $(INST_DIR) && tar cvfj $(STORE_DIR)/$(CARGO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 $(CARGO_PKG_ID)
-	cd $(STORE_DIR) && ln -sf $(CARGO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 $(CARGO_LATEST)-$(TARGET_ARCH)-inst.tar.bz2
+	cd $(STORE_DIR) && ln -sfT $(CARGO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 $(CARGO_LATEST)-$(TARGET_ARCH)-inst.tar.bz2
 	
 	@echo "$(IDENT): Cargo build finished at `date -u +%Y%m%d-%H%M%S`"
 	rm -f $(CARGO_HASH_OUT)
