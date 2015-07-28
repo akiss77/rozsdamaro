@@ -81,3 +81,17 @@ CARGO_SRC_DIR_x86_64:=
 
 # Directory where cargo is checked out on the aarch64 machine
 CARGO_SRC_DIR_aarch64:=
+
+
+################################################################################
+# Servo-specific configuration
+
+# Git remote name of upstream servo
+# Most probably should point at https://github.com/servo/servo.git
+SERVO_UPSTREAM_REMOTE:=
+
+# Directory where servo is checked out on the PC
+SERVO_SRC_DIR_x86_64:=
+
+# Directory where servo is checked out on the aarch64 machine
+SERVO_SRC_DIR_aarch64:=

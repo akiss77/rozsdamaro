@@ -45,3 +45,14 @@ See [LICENSE](LICENSE) for copyright and licensing.
 * make rust-all-fork-log
 * make rust-create-branch HASH=xxx BRANCH=nnn
 
+## Servo build rules
+
+* make servo-build-hash HASH=hhh|nnn
+* make servo-build-hash-log HASH=hhh|nnn
+* make servo-build-master
+* make servo-build-master-log
+
+## Servo local copy maintenance rules
+
+* make servo-pull-upstream
+

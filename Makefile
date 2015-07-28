@@ -57,4 +57,5 @@ $(STORE_DIR):
 
 include mk/rust.mk
 include mk/cargo.mk
+include mk/servo.mk
 include mk/readme.mk
