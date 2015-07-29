@@ -76,6 +76,10 @@ RUST_SRC_DIR_aarch64:=
 # Most probably should point at https://github.com/rust-lang/cargo.git
 CARGO_UPSTREAM_REMOTE:=
 
+# Git remote name of mirrored cargo repository
+# Not mandatory, only if a mirror is to be kept in sync
+CARGO_MIRROR_REMOTE:=
+
 # Directory where cargo is checked out on the PC
 CARGO_SRC_DIR_x86_64:=
 
@@ -89,6 +93,10 @@ CARGO_SRC_DIR_aarch64:=
 # Git remote name of upstream servo
 # Most probably should point at https://github.com/servo/servo.git
 SERVO_UPSTREAM_REMOTE:=
+
+# Git remote name of mirrored servo repository
+# Not mandatory, only if a mirror is to be kept in sync
+SERVO_MIRROR_REMOTE:=
 
 # Directory where servo is checked out on the PC
 SERVO_SRC_DIR_x86_64:=

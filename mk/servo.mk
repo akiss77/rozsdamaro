@@ -75,9 +75,10 @@ servo-build-master-log:
 
 
 ################################################################################
-## ## Servo local copy maintenance rules
+## ## Servo local copy and mirror maintenance rules
 ##
 ## * make servo-pull-upstream
+## * make servo-mirror-master
 ##
 
 .PHONY: servo-pull-upstream
@@ -85,3 +86,8 @@ servo-pull-upstream:
 	cd $(SERVO_SRC_DIR) && git fetch $(SERVO_UPSTREAM_REMOTE)
 	cd $(SERVO_SRC_DIR) && git checkout master
 	cd $(SERVO_SRC_DIR) && git merge --ff-only $(SERVO_UPSTREAM_REMOTE)/master
+
+.PHONY: servo-mirror-master
+servo-mirror-master: servo-pull-upstream
+	cd $(SERVO_SRC_DIR) && git submodule update
+	cd $(SERVO_SRC_DIR) && git push $(SERVO_MIRROR_REMOTE) master

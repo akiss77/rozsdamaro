@@ -12,9 +12,10 @@ See [LICENSE](LICENSE) for copyright and licensing.
 * make cargo-build-master
 * make cargo-build-master-log
 
-## Cargo local copy maintenance rules
+## Cargo local copy and mirror maintenance rules
 
 * make cargo-pull-upstream
+* make cargo-mirror-master
 
 ## Cargo-related Rozsdamaro maintenance rules
 
@@ -52,7 +53,8 @@ See [LICENSE](LICENSE) for copyright and licensing.
 * make servo-build-master
 * make servo-build-master-log
 
-## Servo local copy maintenance rules
+## Servo local copy and mirror maintenance rules
 
 * make servo-pull-upstream
+* make servo-mirror-master
 

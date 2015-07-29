@@ -74,9 +74,10 @@ cargo-build-master-log:
 
 
 ################################################################################
-## ## Cargo local copy maintenance rules
+## ## Cargo local copy and mirror maintenance rules
 ##
 ## * make cargo-pull-upstream
+## * make cargo-mirror-master
 ##
 
 .PHONY: cargo-pull-upstream
@@ -84,6 +85,11 @@ cargo-pull-upstream:
 	cd $(CARGO_SRC_DIR) && git fetch $(CARGO_UPSTREAM_REMOTE)
 	cd $(CARGO_SRC_DIR) && git checkout master
 	cd $(CARGO_SRC_DIR) && git merge --ff-only $(CARGO_UPSTREAM_REMOTE)/master
+
+.PHONY: cargo-mirror-master
+cargo-mirror-master: cargo-pull-upstream
+	cd $(CARGO_SRC_DIR) && git submodule update
+	cd $(CARGO_SRC_DIR) && git push $(CARGO_MIRROR_REMOTE) master
 
 
 ################################################################################
