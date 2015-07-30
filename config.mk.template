@@ -31,6 +31,9 @@ INST_DIR_x86_64:=
 # SSH-compatible login info to the aarch64 machine, i.e., user@hostname
 SLAVE_aarch64:=
 
+# Parallelization capability of the aarch64 machine (used for make -j)
+JOBS_aarch64:=
+
 # Root directory of the Rozsdamaro system on the aarch64 machine
 # Note: For now at least, the aarch64 slave is expected to share the Rozsdamaro
 # directory with the PC, i.e., one should mount the other.

@@ -125,7 +125,7 @@ ifneq ($(BUILD_ARCH),$(TARGET_ARCH))
 
 .PHONY: rust-build-branch-slave
 rust-build-branch-slave: rust-build-branch
-	ssh $(SLAVE_$(TARGET_ARCH)) "make -j -C $(RZSD_DIR_$(TARGET_ARCH)) rust-build-branch BRANCH=$(BRANCH)"
+	ssh $(SLAVE_$(TARGET_ARCH)) "make -j $(JOBS_$(TARGET_ARCH)) -C $(RZSD_DIR_$(TARGET_ARCH)) rust-build-branch BRANCH=$(BRANCH)"
 
 .PHONY: rust-build-branch-slave-log
 rust-build-branch-slave-log: $(STORE_DIR)
