@@ -49,7 +49,7 @@ servo-build-hash: $(STORE_DIR)
 	cd $(SERVO_SRC_DIR) && ./mach build --dev --verbose
 	
 	tar cvfj $(STORE_DIR)/$(SERVO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 -C $(SERVO_SRC_DIR)/target/debug servo -C $(SERVO_SRC_DIR) resources
-	cd $(STORE_DIR) && ln -sfT $(SERVO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 $(SERVO_LATEST)-$(TARGET_ARCH)-inst.tar.bz2
+	[ "$(HASH)" != "master" ] || ( cd $(STORE_DIR) && ln -sfT $(SERVO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 $(SERVO_LATEST)-$(TARGET_ARCH)-inst.tar.bz2 )
 	
 	@echo "$(IDENT): Servo build finished at `date -u +%Y%m%d-%H%M%S`"
 	rm -f $(SERVO_HASH_OUT)

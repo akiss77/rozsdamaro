@@ -72,7 +72,7 @@ internal-rust-build-branch-main: internal-rust-build-branch-pre $(STORE_DIR)
 	grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT) && \
 	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 	rm -f $(RUST_SNAP_OUT)
-	cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
+	[ "$(BRANCH)" != "$(RUST_FORK_MASTER)" ] || ( cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 )
 
 else
 
@@ -88,13 +88,13 @@ internal-rust-build-branch-main: internal-rust-build-branch-pre $(STORE_DIR)
 	grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT) && \
 	  mv $(RUST_SRC_DIR)/`grep rust-stage0-.*.tar.bz2 $(RUST_SNAP_OUT)` $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
 	rm -f $(RUST_SNAP_OUT)
-	cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2
+	[ "$(BRANCH)" != "$(RUST_FORK_MASTER)" ] || ( cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-snap$(XBUILT).tar.bz2 )
 	
 	$(MAKE) -C $(RUST_SRC_DIR) install
-	cd $(INST_DIR) && ln -sfT $(RUST_PKG_ID) $(RUST_LATEST)
+	[ "$(BRANCH)" != "$(RUST_FORK_MASTER)" ] || ( cd $(INST_DIR) && ln -sfT $(RUST_PKG_ID) $(RUST_LATEST) )
 	
 	cd $(INST_DIR) && tar cvfj $(STORE_DIR)/$(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 $(RUST_PKG_ID)
-	cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2
+	[ "$(BRANCH)" != "$(RUST_FORK_MASTER)" ] || ( cd $(STORE_DIR) && ln -sfT $(RUST_PKG_ID)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 $(RUST_LATEST)-$(TARGET_ARCH)-inst$(XBUILT).tar.bz2 )
 
 endif
 
