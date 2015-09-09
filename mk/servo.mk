@@ -46,6 +46,7 @@ servo-build-hash: $(STORE_DIR)
 	echo "rust-root = \"`cat $(SERVO_RUST_ROOT)`\"" >>$(SERVO_SRC_DIR)/.servobuild
 	echo "system-cargo = true" >>$(SERVO_SRC_DIR)/.servobuild
 	echo "cargo-root = \"$(INST_DIR)/cargo-latest\"" >>$(SERVO_SRC_DIR)/.servobuild
+	echo "rustc-with-gold = false" >>$(SERVO_SRC_DIR)/.servobuild
 	cd $(SERVO_SRC_DIR) && ./mach build --dev --verbose
 	
 	tar cvfj $(STORE_DIR)/$(SERVO_PKG_ID)-$(TARGET_ARCH)-inst.tar.bz2 -C $(SERVO_SRC_DIR)/target/debug servo -C $(SERVO_SRC_DIR) resources
